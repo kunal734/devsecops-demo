@@ -6,6 +6,9 @@ import GameHistory from './components/GameHistory';
 import { calculateWinner, checkDraw } from './utils/gameLogic';
 
 function App() {
+  // Player names state
+  const [playerX, setPlayerX] = useState("Player 1");  
+  const [playerO, setPlayerO] = useState("Player 2");
   // Game state
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
@@ -84,12 +87,12 @@ function App() {
   // Get current game status message
   const getStatusMessage = () => {
     if (gameStatus === 'won') {
-      const winner = !xIsNext ? 'X' : 'O';
+      const winner = !xIsNext ? playerX : playerO;
       return `Player ${winner} wins!`;
     } else if (gameStatus === 'draw') {
       return "It's a draw!";
     } else {
-      return `Next player: ${xIsNext ? 'X' : 'O'}`;
+      return `Next player: ${xIsNext ? playerX : playerO}`;
     }
   };
 
@@ -107,7 +110,22 @@ function App() {
         <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Game section */}
           <div className="md:col-span-2 flex flex-col items-center">
-            <div className="mb-4 text-center">
+            <div className="mb-4 text-center space-y-2">
+              <input 
+                type="text"
+                className="border p-2 rounded w-full"
+                placeholder="Enter Player X Name"
+                value={playerX}
+                onChange={(e) => setPlayerX(e.target.value)}
+              />
+              <input 
+                type="text"
+                className="border p-2 rounded w-full"
+                placeholder="Enter Player O Name"
+                value={playerO}
+                onChange={(e) => setPlayerO(e.target.value)}
+              />
+            </div>
               <h2 className="text-xl font-semibold text-indigo-800">{getStatusMessage()}</h2>
             </div>
             
@@ -136,7 +154,7 @@ function App() {
           
           {/* Stats section */}
           <div className="flex flex-col gap-6">
-            <ScoreBoard scores={scores} />
+            <ScoreBoard scores={scores} playerX={playerX} playerO={playerO} />
             <GameHistory history={gameHistory} />
           </div>
         </div>
