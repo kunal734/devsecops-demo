@@ -125,7 +125,6 @@ function App() {
                 value={playerO}
                 onChange={(e) => setPlayerO(e.target.value)}
               />
-            </div>
               <h2 className="text-xl font-semibold text-indigo-800">{getStatusMessage()}</h2>
             </div>
             
